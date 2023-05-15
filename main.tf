@@ -53,7 +53,7 @@ resource "aws_autoscaling_group" "example" {
   launch_configuration = aws_launch_configuration.example.name
   vpc_zone_identifier = data.aws_subnets.default.ids
 
-  target_group_arns = [aws_lb_target_group.asg]
+  target_group_arns = [aws_lb_target_group.asg.arn]
   health_check_type = "ELB"
 
   min_size = 2
@@ -81,7 +81,7 @@ resource "aws_lb" "example" {
   name = "terraform-asg-example"
   load_balancer_type = "application"
   subnets = data.aws_subnets.default.ids
-  security_groups = [data.aws_security_group.alb.id]
+  security_groups = [aws_security_group.alb.id]
   
 }
 resource "aws_lb_listener" "http" {
